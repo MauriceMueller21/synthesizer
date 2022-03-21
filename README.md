@@ -10,6 +10,10 @@
 | Start        | 2022-03-20                     |
 | Depencendies | Alsa, Xlib                     |
 
-## Documentation
+## Website
 
-[User guide](guide/introduction.md)
+[Website](https://MauriceMueller21.github.io/synthesizer/index.html)
+
+[User guide](https://MauriceMueller21.github.io/synthesizer/guide/index.md)
+
+[Code documentation](https://MauriceMueller21.github.io/synthesizer/doc/index.html)
