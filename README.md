@@ -12,8 +12,6 @@
 
 ## Website
 
-[Website](https://MauriceMueller21.github.io/synthesizer/)
+User Guide: https://mauricemueller21.github.io/synthesizer/guide/index.html
 
-[User Guide](https://mauricemueller21.github.io/synthesizer/guide/index.html)
-
-[Code Documentation](https://MauriceMueller21.github.io/synthesizer/documentation/index.html)
+Code Documentation: https://MauriceMueller21.github.io/synthesizer/documentation/index.html
