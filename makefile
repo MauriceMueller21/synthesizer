@@ -1,6 +1,5 @@
 SHELL := /bin/bash
-.SILENT: all compile run clean test-graphics-manually test-graphics-automatically
-
+.SILENT:
 
 all: compile run
 
