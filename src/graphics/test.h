@@ -3,5 +3,5 @@
 /**
  * Main function for the graphics backend. Only used for testing purposes.
  */
-int test_graphics();
+int test_graphics_manually();
 

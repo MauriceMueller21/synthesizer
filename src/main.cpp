@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 		
 		if (option == 't')
 		{
-			return test_graphics();
+			return test_graphics_manually();
 		}
 	}
 	return 0;
