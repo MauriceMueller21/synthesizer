@@ -4,19 +4,18 @@
 
 int test_graphics_manually()
 {
-	SWindow* window = new SWindow();
-	window->title("Synthesizer");
-	window->width(400);
-	window->height(400);
-	window->create();
+	SWindow window;
+	window["title"] = std::string("Synthesizer");
+	window["width"] = 600;
+	window["height"] = 400;
+	window.create();
 
 	XEvent event;
 	while(true)
 	{
-		XNextEvent(window->display(), &event);
+		XNextEvent(window.display(), &event);
 	}
 
-	delete(window);
 	return 0;
 }
 

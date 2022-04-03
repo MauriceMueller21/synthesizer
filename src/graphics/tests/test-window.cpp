@@ -10,44 +10,13 @@ TEST_CASE("WindowCreation")
 
 TEST_CASE("WindowProperty")
 {
-	SWindow* window = new SWindow();
-
-	SECTION("width")
-	{
-		int default_value = 420;
-		CHECK(window->width() == default_value);
-		
-		window->width(100);
-		CHECK(window->width() == 100);
-		
-		window->width(200);
-		CHECK(window->width() == 200);
-	}
+	SWindow window;
 	
-	SECTION("height")
+	SECTION("DefaultValues")
 	{
-		int default_value = 420;
-		CHECK(window->height() == default_value);
-		
-		window->height(100);
-		CHECK(window->height() == 100);
-		
-		window->height(200);
-		CHECK(window->height() == 200);
+		CHECK((window["width"] == 420));
+		CHECK((window["height"] == 420));
+		CHECK((window["title"] == std::string("")));
 	}
-
-	SECTION("title")
-	{
-		std::string default_value = "";
-		CHECK(window->title() == default_value);
-		
-		window->title("Hello");
-		CHECK(window->title() == "Hello");
-		
-		window->title("World");
-		CHECK(window->title() == "World");
-	}
-
-	delete(window);
 }
 
