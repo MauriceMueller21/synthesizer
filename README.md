@@ -2,7 +2,7 @@
 
 > A Linux Synthesizer using Alsa and Xlib
 
-|              |                                |
+| Detail       | Description                    |
 | ------------ | ------------------------------ |
 | Developers   | Lukas Niegsch, Maurice Mueller |
 | Languages    | C, C++, Assembly               |
@@ -12,18 +12,13 @@
 
 ## Website
 
-User Guide: https://mauricemueller21.github.io/synthesizer/guide/index.html
+User Guide:
 
-Code Documentation: https://mauricemueller21.github.io/synthesizer/documentation/index.html
+https://mauricemueller21.github.io/synthesizer/guide/index.html
 
-## .gitignore
+Code Documentation:
 
-The `.gitignore` should contain:
-```
-.gitignore
-.gitconfig
-bin/
-```
+https://mauricemueller21.github.io/synthesizer/documentation/index.html
 
 ## Project structure
 
@@ -35,7 +30,8 @@ synthesizer/            Repository root
 │   │   ├── graphics/   Graphics object files
 │   │   ├── sound/      Sound object files
 │   │   └── test/       Test object files
-│   └── synthesizer     Executable program
+│   ├── synthesizer-gui Executable program (graphical)
+│   └── synthesizer-tui Executable program (text based)
 ├── docs/               The website
 │   ├── guide/          User manual (Markdown and HTML)
 │   ├── images/         Images for the user manual
@@ -45,7 +41,8 @@ synthesizer/            Repository root
 │   ├── graphics/       Graphics source code
 │   ├── sound/          Sound source code
 │   ├── test/           Test source code
-│   ├── main.cpp        The main.cpp file
+│   ├── main-gui.cpp    The main code file of the graphical software
+│   ├── main-tui.c      The main code file of the text based software
 │   └── main.h          The main.h file
 ├── tools/              Tools for the project
 │   └── sh/             Bash scripts
