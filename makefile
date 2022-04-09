@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+CFLAGS := -Wall -Wextra -Werror -O2 -march=native -pipe
 .SILENT:
 
 all: compile run
@@ -9,16 +10,14 @@ clean:
 compile:
 	mkdir -p bin/
 	libraries="-lX11 -lasound"; \
-	flags="-Wall -Wextra -Werror"; \
 	filenames="$$(find src/ -name "*.cpp" | grep -v "tests")"; \
-	g++ $$flags $$libraries $$filenames -o bin/synthesizer
+	g++ $(CFLAGS) $$libraries $$filenames -o bin/synthesizer
 
 compile-tui:
 	mkdir -p bin/
 	libraries="-lasound"; \
-	flags="-Wall -Wextra -Werror"; \
 	filenames="$$(find src/ -name "*.c" | grep -E "src/(core|sound|tui)/" | grep -v -E "src/(core|sound|tui)/test/")"; \
-	gcc $$flags $$libraries $$filenames src/main-tui.c -o bin/synthesizer-tui
+	gcc $(CFLAGS) $$libraries $$filenames src/main-tui.c -o bin/synthesizer-tui
 
 tui: compile-tui
 	bin/synthesizer-tui
@@ -35,14 +34,8 @@ test-sound:
 test-tui:
 	bash scripts/test-tui-sound-core.sh tui
 
-test-graphics-manually: compile
-	bin/synthesizer -t
-
-test-graphics-automatically:
-	mkdir -p bin/tests/
-	echo -e "" > bin/tests/graphics.log
-	cmake src/graphics -B bin/tests/graphics >> bin/tests/graphics.log
-	cmake --build bin/tests/graphics >> bin/tests/graphics.log
+test-graphics:
+	scripts/test-graphics.sh
 	bin/tests/graphics/test-graphics
 
 lines:
