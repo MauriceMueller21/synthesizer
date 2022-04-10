@@ -24,7 +24,7 @@ fi
 source_file_pattern="src/(${source_file_pattern})/test/"
 
 input_path="src/$1/test/"
-output_path="bin/tests/$1/"
+output_path="bin/test/$1/"
 
 program="${output_path}test-$1"
 log_file="${output_path}output.log"

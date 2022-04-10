@@ -17,7 +17,7 @@ compile-gui:
 	mkdir -p bin/
 	libraries="-lX11 -lasound"; \
 	filenames="$$(find src/ -name "*.cpp" | grep -E "src/(core|sound|gui)/" | grep -v -E "src/(core|sound|gui)/test/")"; \
-	g++ $(CFLAGS) $$libraries $$filenames -o bin/synthesizer-gui
+	g++ $(CFLAGS) $$libraries $$filenames src/main-gui.cpp -o bin/synthesizer-gui
 
 tui: compile-tui
 	bin/synthesizer-tui
