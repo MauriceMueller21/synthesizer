@@ -27,9 +27,10 @@ synthesizer/            Repository root
 ├── bin/                Compiled and linked files
 │   ├── objects/        Compiled object files
 │   │   ├── core/       Core object files
-│   │   ├── graphics/   Graphics object files
+│   │   ├── gui/        Graphics object files
 │   │   ├── sound/      Sound object files
-│   │   └── test/       Test object files
+│   │   └── tui/        Text based object files
+│   ├── test/           Test object files
 │   ├── synthesizer-gui Executable program (graphical)
 │   └── synthesizer-tui Executable program (text based)
 ├── docs/               The website
@@ -38,14 +39,12 @@ synthesizer/            Repository root
 │   └── documentation/  Source code documentation
 ├── src/                Source code
 │   ├── core/           Core source code
-│   ├── graphics/       Graphics source code
+│   ├── gui/            Graphics source code
 │   ├── sound/          Sound source code
-│   ├── test/           Test source code
+│   ├── tui/            Text based source code
 │   ├── main-gui.cpp    The main code file of the graphical software
-│   ├── main-tui.c      The main code file of the text based software
-│   └── main.h          The main.h file
+│   └── main-tui.c      The main code file of the text based software
 ├── tools/              Tools for the project
-│   └── sh/             Bash scripts
 ├── README.md           General project information
 └── makefile            The main makefile
 ```
