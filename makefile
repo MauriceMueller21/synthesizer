@@ -46,6 +46,7 @@ test-graphics-automatically:
 	bin/tests/graphics/test-graphics
 
 lines:
+	echo "Code Lines:"
 	echo -en ".cpp "
 	wc -l $$(find src/ -name *.cpp) | grep " total" | grep -o [0-9]\*
 	echo -en ".c   "
