@@ -1,8 +1,8 @@
 #! /bin/bash
 
 project="$(cd -- "$(dirname "$0")/.." > /dev/null 2>&1 ; pwd -P)"
-results="${project}/bin/tests/graphics/"
-logfile="${project}/bin/tests/graphics.log"
+results="${project}/bin/test/gui/"
+logfile="${project}/bin/test/gui.log"
 
 if [ $(basename ${project}) != "synthesizer" ]
 then
@@ -13,7 +13,7 @@ fi
 
 mkdir -p ${results}
 {
-	cmake ${project}/src/graphics -B ${results}
+	cmake ${project}/src/gui -B ${results}
 	cmake --build ${results}
 } > $logfile
 

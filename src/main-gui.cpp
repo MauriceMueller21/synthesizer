@@ -1,4 +1,4 @@
-#include "graphics/test.h"
+#include "gui/test.h"
 #include <stdio.h>
 #include <unistd.h>
 

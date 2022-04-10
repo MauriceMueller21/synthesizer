@@ -1,3 +1,0 @@
-- debate if we are using Catch2 (v3) as testing framework
-- integrate github dependencies for libraries: Xlib, Alsa, (maybe Catch2)
-
