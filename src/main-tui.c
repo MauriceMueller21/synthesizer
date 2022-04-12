@@ -4,13 +4,15 @@
 #include <stdio.h>
 
 int main(int argc, char** argv) {
-	tui.initialize();
-	char* string1 = core.bool_to_string(true);
-	char* string2 = core.bool_to_string(false);
+	initialize_core();
+	char* string1 = core.string.bool_to_string(true);
+	char* string2 = core.string.bool_to_string(false);
 	printf("%s\n", string1);
 	printf("%s\n", string2);
+	initialize_tui();
 	printf("%s\n", tui.args.is_flag(argc, argv, 'a') ? "true" : "false");
-	printf("%s\n", core.bool_to_string(tui.args.is_flag(argc, argv, 'a')));
+	bool isASet = tui.args.is_flag(argc, argv, 'a');
+	printf("%s\n", core.string.bool_to_string(isASet));
 	printf("Hello World! (%d parameters, %p is the pointer)\n", argc, argv);
 	return 0;
 }

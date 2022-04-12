@@ -2,11 +2,10 @@
 
 #include "args.h"
 
-#include <stdbool.h>
-
 typedef struct {
-	void (*initialize)();
 	Args args;
 } Tui;
 
 Tui tui;
+
+void initialize_tui();

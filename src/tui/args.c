@@ -15,6 +15,6 @@ bool is_flag(int argc, char** argv, char character) {
 	return false;
 }
 
-Args args = {
-	&is_flag
-};
+void initialize_args() {
+	args.is_flag = &is_flag;
+}

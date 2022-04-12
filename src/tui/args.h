@@ -7,3 +7,5 @@ typedef struct {
 } Args;
 
 Args args;
+
+void initialize_args();

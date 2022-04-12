@@ -1,11 +1,8 @@
 #include "tui.h"
+
 #include "args.h"
 
-void initialize_tui_struct() {
+void initialize_tui() {
+	initialize_args();
 	tui.args = args;
 }
-
-Tui tui = {
-	&initialize_tui_struct,
-	{0}
-};

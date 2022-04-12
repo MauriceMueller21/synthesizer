@@ -1,10 +1,11 @@
 #pragma once
 
-#include <stdbool.h>
+#include "string.h"
 
 typedef struct {
-	char* (*bool_to_string)(bool boolean);
-	int (*index_of)(char* string, char character);
+	String string;
 } Core;
 
 Core core;
+
+void initialize_core();
