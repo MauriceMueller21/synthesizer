@@ -32,6 +32,6 @@ typedef struct List {
 	void (*destroy)(VoidPointerList* list);
 } List;
 
-List list;
+extern List list;
 
 void core_list_initialize();

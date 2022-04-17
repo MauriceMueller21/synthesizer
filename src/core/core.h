@@ -8,6 +8,6 @@ typedef struct Core {
 	String string;
 } Core;
 
-Core core;
+extern Core core;
 
 void core_initialize();

@@ -1,5 +1,7 @@
 #include "core.h"
 
+Core core;
+
 void core_initialize() {
 	core_list_initialize();
 	core.list = list;

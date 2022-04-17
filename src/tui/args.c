@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <string.h>
 
+Args args;
+
 bool tui_args_is_flag(int argc, char** argv, char character) {
 	int index = 0;
 	while (index < argc) {

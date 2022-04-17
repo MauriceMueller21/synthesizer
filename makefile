@@ -41,8 +41,8 @@ test-gui:
 lines:
 	echo "Code Lines:"
 	echo -en ".cpp "
-	wc -l $$(find src/ -name *.cpp) | grep " total" | grep -o [0-9]\*
+	wc -l $$(find src/ -name '*.cpp') | grep " total" | grep -o [0-9]\*
 	echo -en ".c   "
-	wc -l $$(find src/ -name *.c) | grep " total" | grep -o [0-9]\*
+	wc -l $$(find src/ -name '*.c') | grep " total" | grep -o [0-9]\*
 	echo -en ".h   "
-	wc -l $$(find src/ -name *.h) | grep " total" | grep -o [0-9]\*
+	wc -l $$(find src/ -name '*.h') | grep " total" | grep -o [0-9]\*

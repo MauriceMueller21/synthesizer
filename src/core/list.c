@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+List list;
+
 VoidPointerList* core_list_create() {
 	VoidPointerList* list = malloc(sizeof(VoidPointerList));
 	list->start = NULL;

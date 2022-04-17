@@ -8,6 +8,6 @@ typedef struct String {
 	int (*index_of)(char* string, char character);
 } String;
 
-String string;
+extern String string;
 
 void core_string_initialize();

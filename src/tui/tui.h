@@ -6,6 +6,6 @@ typedef struct Tui {
 	Args args;
 } Tui;
 
-Tui tui;
+extern Tui tui;
 
 void tui_initialize();

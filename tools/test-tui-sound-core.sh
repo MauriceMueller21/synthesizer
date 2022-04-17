@@ -21,7 +21,7 @@ else
 	exit 1
 fi
 
-source_file_pattern="src/(${source_file_pattern})/test/"
+source_file_pattern="src/(${source_file_pattern})/"
 
 input_path="src/$1/test/"
 output_path="bin/test/$1/"
@@ -31,7 +31,7 @@ log_file="${output_path}output.log"
 
 libraries="-lX11"
 flags="-Wall -Wextra -Werror"
-source_files="$(find src/ -name *.c | grep -E ${source_file_pattern})"
+source_files="$(find src/ -name '*.c' | grep -E ${source_file_pattern})"
 
 mkdir -p ${output_path}
 

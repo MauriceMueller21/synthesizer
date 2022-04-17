@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+String string;
+
 char* core_string_bool_to_string(bool boolean) {
 	return boolean ? "true" : "false";
 }
