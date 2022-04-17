@@ -1,8 +1,8 @@
 #include "core.h"
 
-#include "string.h"
-
-void initialize_core() {
-	initialize_string();
+void core_initialize() {
+	core_list_initialize();
+	core.list = list;
+	core_string_initialize();
 	core.string = string;
 }

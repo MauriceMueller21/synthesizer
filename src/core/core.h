@@ -1,11 +1,13 @@
 #pragma once
 
+#include "list.h"
 #include "string.h"
 
-typedef struct {
+typedef struct Core {
+	List list;
 	String string;
 } Core;
 
 Core core;
 
-void initialize_core();
+void core_initialize();

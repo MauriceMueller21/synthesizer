@@ -2,7 +2,7 @@
 
 #include "args.h"
 
-void initialize_tui() {
-	initialize_args();
+void tui_initialize() {
+	tui_args_initialize();
 	tui.args = args;
 }

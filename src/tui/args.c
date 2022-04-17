@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-bool is_flag(int argc, char** argv, char character) {
+bool tui_args_is_flag(int argc, char** argv, char character) {
 	int index = 0;
 	while (index < argc) {
 		int length = strlen(argv[index]);
@@ -15,6 +15,6 @@ bool is_flag(int argc, char** argv, char character) {
 	return false;
 }
 
-void initialize_args() {
-	args.is_flag = &is_flag;
+void tui_args_initialize() {
+	args.is_flag = &tui_args_is_flag;
 }

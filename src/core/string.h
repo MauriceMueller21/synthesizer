@@ -2,11 +2,12 @@
 
 #include <stdbool.h>
 
-typedef struct {
+typedef struct String {
 	char* (*bool_to_string)(bool boolean);
+	char* (*concatenate_strings)(char* string1, char* string2);
 	int (*index_of)(char* string, char character);
 } String;
 
 String string;
 
-void initialize_string();
+void core_string_initialize();

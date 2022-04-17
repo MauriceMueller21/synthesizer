@@ -2,10 +2,10 @@
 
 #include <stdbool.h>
 
-typedef struct {
+typedef struct Args {
 	bool (*is_flag)(int argc, char** argv, char character);
 } Args;
 
 Args args;
 
-void initialize_args();
+void tui_args_initialize();
