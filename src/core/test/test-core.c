@@ -2,27 +2,33 @@
 
 #include <stdio.h>
 
-void test_list();
+int test_list();
 
 void show_list(VoidPointerList* list);
 
 void show_cursor(VoidPointerList* list);
 
+int test_string();
+
 #ifdef CORETEST
 
 int main(int argc, char** argv) {
 	core_initialize();
-	test_list();
+	int success_list = test_list();
+	int success_string = test_string();
 	printf("Executed core test successfully (%d parameters, %p is the pointer).\n", argc, argv);
-	return 1;
+	printf("Tested core.list successfully: %d\n", success_list);
+	printf("Tested core.string successfully: %d\n", success_string);
+	int success = success_list && success_string;
+	return !success;// successful/true = return code 0
 }
 
 #endif
 
-void test_list() {
+int test_list() {
 	VoidPointerList* list = core.list.create();
 	printf("Address of list: %p\n", list);
-	printf("Is the list empty? %s\n", core.string.bool_to_string(core.list.is_empty(list)));
+	printf("Is the list empty? %s\n", core.string.boolean_to_string(core.list.is_empty(list)));
 	char a = 'a';
 	char b = 'b';
 	char c = 'c';
@@ -42,7 +48,7 @@ void test_list() {
 	printf("char pointer to e: %p\n", ep);
 	printf("char pointer to f: %p\n", fp);
 	core.list.add(list, ap);
-	printf("Is the list empty? %s\n", core.string.bool_to_string(core.list.is_empty(list)));
+	printf("Is the list empty? %s\n", core.string.boolean_to_string(core.list.is_empty(list)));
 	printf("LIST HAS 1 ELEMENT NOW!\n");
 	show_list(list);
 	core.list.insert(list, 0, bp);
@@ -54,7 +60,7 @@ void test_list() {
 	core.list.insert(list, 3, dp);
 	printf("LIST HAS 4 ELEMENTS NOW!\n");
 	show_list(list);
-	printf("Is the list empty? %s\n", core.string.bool_to_string(core.list.is_empty(list)));
+	printf("Is the list empty? %s\n", core.string.boolean_to_string(core.list.is_empty(list)));
 	show_list(list);
 	core.list.set(list, 1, ep);
 	core.list.set(list, 0, dp);
@@ -112,6 +118,7 @@ void test_list() {
 	show_list(list);
 	show_cursor(list);
 	core.list.destroy(list);
+	return 1;
 }
 
 void show_cursor(VoidPointerList* list) {
@@ -141,4 +148,49 @@ void show_list(VoidPointerList* list) {
 		printf("\n");
 		index++;
 	}
+}
+
+int test_string() {
+	char* string1 = "Hello";
+	if (core.string.get_length(string1) != 5) {
+		printf("core.string.get_length() does not work!\n");
+		return 0;
+	}
+	char* string2 = " World!";
+	char* string3 = " World!";
+	char* string4 = " World?";
+	int equal23 = core.string.are_strings_equal(string2, string3);
+	int equal34 = core.string.are_strings_equal(string3, string4);
+	if (!equal23 || equal34) {
+		printf("core.string.are_strings_equal() does not work!\n");
+		return 0;
+	}
+	char* message = core.string.concatenate_strings(string1, string2);
+	if (!core.string.are_strings_equal(message, "Hello World!")) {
+		printf("core.string.concatenate_strings() does not work!\n");
+		return 0;
+	}
+	if (!core.string.is_substring(message, "o W", 4)) {
+		printf("core.string.is_substring() does not work!\n");
+		return 0;
+	}
+	char* part = core.string.get_substring(message, 4, 7);
+	if (!core.string.are_strings_equal(part, "o W")) {
+		printf("core.string.get_substring() does not work!\n");
+		return 0;
+	}
+	if (!core.string.starts_with_string(message, "Hello Wo")) {
+		printf("core.string.starts_with_string() does not work!\n");
+		return 0;
+	}
+	if (!core.string.ends_with_string(message, "o World!")) {
+		printf("core.string.ends_with_string() does not work!\n");
+		return 0;
+	}
+	if (core.string.search_character(message, ' ') != 5) {
+		printf("core.string.search_character does not work!\n");
+		return 0;
+	}
+	printf("core.string was tested successfully.");
+	return 1;
 }
