@@ -39,10 +39,29 @@ test-gui:
 	bin/test/gui/test-gui
 
 lines:
-	echo "Code Lines:"
-	echo -en ".cpp "
-	wc -l $$(find src/ -name '*.cpp') | grep " total" | grep -o [0-9]\*
+	echo "Code Lines TUI:"
 	echo -en ".c   "
-	wc -l $$(find src/ -name '*.c') | grep " total" | grep -o [0-9]\*
+	wc -l $$(find src/core/ src/sound/ src/tui/ -name '*.c') "src/main-tui.c" | grep " total" | grep -o [0-9]\*
 	echo -en ".h   "
-	wc -l $$(find src/ -name '*.h') | grep " total" | grep -o [0-9]\*
+	wc -l $$(find src/core/ src/sound/ src/tui/ -name '*.h') | grep " total" | grep -o [0-9]\*
+	echo "Code Lines GUI:"
+	echo -en ".cpp "
+	wc -l $$(find src/gui/ -name '*.cpp') "src/main-gui.cpp" | grep " total" | grep -o [0-9]\*
+	echo -en ".h   "
+	wc -l $$(find src/gui/ -name '*.h') | grep " total" | grep -o [0-9]\*
+	echo "Total Lines:"
+	wc -l $$(find src/ -name '*.h' -o -name '*.c' -o -name '*.cpp') | grep " total" | grep -o [0-9]\*
+
+files:
+	echo "Files TUI:"
+	echo -en ".c   "
+	echo $$(($$(find src/core/ src/sound/ src/tui/ -name '*.c' | wc -l) + 1))
+	echo -en ".h   "
+	find src/core/ src/sound/ src/tui/ -name '*.h' | wc -l
+	echo "Files GUI:"
+	echo -en ".cpp "
+	echo $$(($$(find src/gui/ -name '*.cpp' | wc -l) + 1))
+	echo -en ".h   "
+	find src/gui/ -name '*.h' | wc -l
+	echo "Total Files:"
+	find src/ -name '*.h' -o -name '*.c' -o -name '*.cpp' | wc -l
