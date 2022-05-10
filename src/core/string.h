@@ -1,6 +1,6 @@
 #pragma once
 
-typedef struct String {
+typedef struct StringFunctions {
 	int (*get_length)(char* string);
 	char* (*get_substring)(char* string, int start, int end);
 	int (*is_substring)(char* string, char* part, int position);
@@ -12,8 +12,8 @@ typedef struct String {
 	char* (*boolean_to_string)(int value);
 	int (*get_2_byte_little_endian)(unsigned char* array, int position);
 	int (*get_4_byte_little_endian)(unsigned char* array, int position);
-} String;
+} StringFunctions;
 
-extern String string;
+extern StringFunctions string_functions;
 
 void core_string_initialize();

@@ -1,8 +1,8 @@
 #include "sound.h"
 
-Sound sound;
+SoundFunctions sound;
 
 void sound_initialize() {
 	sound_wav_initialize();
-	sound.wav = wav;
+	sound.wav = wav_functions;
 }

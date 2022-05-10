@@ -3,11 +3,10 @@
 #include <stdio.h>
 
 int test_list();
-
-void show_list(VoidPointerList* list);
-
-void show_cursor(VoidPointerList* list);
-
+void show_list(List* list);
+void show_cursor(List* list);
+int test_char_list();
+int test_string_list();
 int test_string();
 
 #ifdef CORETEST
@@ -15,18 +14,22 @@ int test_string();
 int main(int argc, char** argv) {
 	core_initialize();
 	int success_list = test_list();
+	int success_char_list = test_char_list();
+	int success_string_list = test_string_list();
 	int success_string = test_string();
 	printf("Executed core test successfully (%d parameters, %p is the pointer).\n", argc, argv);
 	printf("Tested core.list successfully: %d\n", success_list);
+	printf("Tested core.charlist successfully: %d\n", success_char_list);
+	printf("Tested core.stringlist successfully: %d\n", success_string_list);
 	printf("Tested core.string successfully: %d\n", success_string);
-	int success = success_list && success_string;
+	int success = success_list && success_char_list && success_string_list && success_string;
 	return !success;// successful/true = return code 0
 }
 
 #endif
 
 int test_list() {
-	VoidPointerList* list = core.list.create();
+	List* list = core.list.create();
 	printf("Address of list: %p\n", list);
 	printf("Is the list empty? %s\n", core.string.boolean_to_string(core.list.is_empty(list)));
 	char a = 'a';
@@ -67,20 +70,16 @@ int test_list() {
 	core.list.set(list, 3, fp);
 	printf("=== START OF CURSOR ANALYZE ===\n");
 	printf("Getting index 2 ...\n");
-	Item* item = core.list.get(list, 2);
-	char* i2 = item->pointer;
+	char* i2 = core.list.get(list, 2);
 	show_cursor(list);
 	printf("Getting index 1 ...\n");
-	item = core.list.get(list, 1);
-	char* i1 = item->pointer;
+	char* i1 = core.list.get(list, 1);
 	show_cursor(list);
 	printf("Getting index 3 ...\n");
-	item = core.list.get(list, 3);
-	char* i3 = item->pointer;
+	char* i3 = core.list.get(list, 3);
 	show_cursor(list);
 	printf("Getting index 0 ...\n");
-	item = core.list.get(list, 0);
-	char* i0 = item->pointer;
+	char* i0 = core.list.get(list, 0);
 	show_cursor(list);
 	printf("=== END OF CURSOR ANALYZE ===\n");
 	printf("Element 2: %c (p=%p)\n", *i2, i2);
@@ -121,7 +120,7 @@ int test_list() {
 	return 1;
 }
 
-void show_cursor(VoidPointerList* list) {
+void show_cursor(List* list) {
 	printf("Cursor position:\n");
 	printf("Last accessed index:   %d\n", list->last_accessed_index);
 	if (list != NULL && list->last_accessed != NULL) {
@@ -131,14 +130,14 @@ void show_cursor(VoidPointerList* list) {
 	}
 }
 
-void show_list(VoidPointerList* list) {
+void show_list(List* list) {
 	printf("List length: %d\n", list->length);
 	printf("List start:  %p\n", list->start);
 	printf("List end:    %p\n", list->end);
 	printf("\n");
 	int index = 0;
 	while (index < list->length) {
-		Item* item = core.list.get(list, index);
+		ListItem* item = core.list.get_item(list, index);
 		printf("index:      %d\n", index);
 		printf("previous:   %p\n", item->previous);
 		printf("this:       %p\n", item);
@@ -148,6 +147,54 @@ void show_list(VoidPointerList* list) {
 		printf("\n");
 		index++;
 	}
+}
+
+int test_char_list() {
+	CharList* list = core.charlist.create();
+	core.charlist.add(list, 'H');
+	core.charlist.add(list, 'e');
+	core.charlist.add(list, 'l');
+	core.charlist.add(list, 'l');
+	core.charlist.add(list, 'o');
+	int length = core.charlist.get_length(list);
+	if (length != 5) {
+		printf("core.charlist.get_length() or core.charlist.add() does not work!\n");
+		return 0;
+	}
+	char* string = core.charlist.to_string(list);
+	if (!core.string.are_strings_equal(string, "Hello")) {
+		printf("\"Hello\" is returned as \"%s\"!\n", string);
+		printf("core.charlist.to_string() does not work!\n");
+		return 0;
+	}
+	printf("core.charlist was tested successfully.\n");
+	return 1;
+}
+
+int test_string_list() {
+	StringList* list = core.stringlist.create();
+	core.stringlist.add(list, "\"Hello ");
+	core.stringlist.add(list, "World\" ");
+	core.stringlist.add(list, "says ");
+	core.stringlist.add(list, "the ");
+	core.stringlist.add(list, "unit ");
+	core.stringlist.add(list, "test!");
+	int length = core.stringlist.get_length(list);
+	if (length != 6) {
+		printf("core.stringlist does not work!\n");
+		return 0;
+	}
+	char** array = core.stringlist.to_array(list);
+	printf("The string list contains following content:\n");
+	int index = 0;
+	while (index < length) {
+		char* string = array[index];
+		printf("%s", string);
+		index++;
+	}
+	printf("End of string list.\n");
+	printf("core.stringlist was tested successfully.\n");
+	return 1;
 }
 
 int test_string() {
@@ -191,6 +238,6 @@ int test_string() {
 		printf("core.string.search_character does not work!\n");
 		return 0;
 	}
-	printf("core.string was tested successfully.");
+	printf("core.string was tested successfully.\n");
 	return 1;
 }

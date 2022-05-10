@@ -1,11 +1,11 @@
 #pragma once
 
-#include "args.h"
+#include "arguments.h"
 
-typedef struct Tui {
-	Args args;
-} Tui;
+typedef struct TuiFunctions {
+	ArgumentsFunctions arguments;
+} TuiFunctions;
 
-extern Tui tui;
+extern TuiFunctions tui;
 
 void tui_initialize();

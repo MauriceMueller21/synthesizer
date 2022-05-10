@@ -2,10 +2,10 @@
 
 #include "wav.h"
 
-typedef struct Sound {
-	Wav wav;
-} Sound;
+typedef struct SoundFunctions {
+	WavFunctions wav;
+} SoundFunctions;
 
-extern Sound sound;
+extern SoundFunctions sound;
 
 void sound_initialize();

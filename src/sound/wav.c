@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Wav wav;
+WavFunctions wav_functions;
 
 int sound_wav_parse_wave_data(WAVFile* wav);
 int sound_wav_parse_wave_chunk(WAVFile* wav, int offset);
@@ -107,6 +107,7 @@ void sound_wav_print_format_information(WAVFile* wav) {
 	printf("Bytes/Second:\t%d\n", wav->bytes_per_second);
 	printf("Bytes/Sample:\t%d\n", wav->bytes_per_sample);
 	printf("Bit Depth:\t%d\n", wav->bit_depth);
+	printf("Unsigned:\t%s\n", core.string.boolean_to_string(wav->bit_depth == 8));
 	printf("Data Offset:\t%d\n", wav->data_offset);
 	printf("Data Size:\t%d\n", wav->data_size);
 }
@@ -117,7 +118,7 @@ void sound_wav_destroy_wav_file(WAVFile* wav) {
 }
 
 void sound_wav_initialize() {
-	wav.read_wav_file = &sound_wav_read_wav_file;
-	wav.print_format_information = &sound_wav_print_format_information;
-	wav.destroy_wav_file = &sound_wav_destroy_wav_file;
+	wav_functions.read_wav_file = &sound_wav_read_wav_file;
+	wav_functions.print_format_information = &sound_wav_print_format_information;
+	wav_functions.destroy_wav_file = &sound_wav_destroy_wav_file;
 }

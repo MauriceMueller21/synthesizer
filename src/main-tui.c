@@ -22,8 +22,8 @@ int main(int argc, char** argv) {
 	printf("Pointer: %p\n", ap);
 	printf("Integer: %d\n", b);
 	printf("Size:    %lu\n", sizeof(ap));
-	printf("%s\n", tui.args.is_flag(argc, argv, 'a') ? "true" : "false");
-	bool isASet = tui.args.is_flag(argc, argv, 'a');
+	printf("%s\n", tui.arguments.is_flag(argc, argv, 'a') ? "true" : "false");
+	bool isASet = tui.arguments.is_flag(argc, argv, 'a');
 	printf("%s\n", core.string.boolean_to_string(isASet));
 	printf("Hello World! (%d parameters, %p is the pointer)\n", argc, argv);
 	char* path = "../windows95_sounds/";

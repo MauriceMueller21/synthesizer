@@ -16,12 +16,12 @@ typedef struct WAVFile {
 	int found_data;
 } WAVFile;
 
-typedef struct Wav {
+typedef struct WavFunctions {
 	WAVFile* (*read_wav_file)(char* path, char* name);
 	void (*print_format_information)(WAVFile* wav);
 	void (*destroy_wav_file)(WAVFile* wav);
-} Wav;
+} WavFunctions;
 
-extern Wav wav;
+extern WavFunctions wav_functions;
 
 void sound_wav_initialize();

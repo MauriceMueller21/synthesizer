@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-String string;
+StringFunctions string_functions;
 
 int core_string_get_length(char* string) {
 	int index = 0;
@@ -117,15 +117,15 @@ int core_string_get_4_byte_little_endian(unsigned char* array, int position) {
 }
 
 void core_string_initialize() {
-	string.get_length = &core_string_get_length;
-	string.get_substring = &core_string_get_substring;
-	string.is_substring = &core_string_is_substring;
-	string.are_strings_equal = &core_string_are_strings_equal;
-	string.starts_with_string = &core_string_starts_with_string;
-	string.ends_with_string = &core_string_ends_with_string;
-	string.concatenate_strings = &core_string_concatenate_strings;
-	string.search_character = &core_string_search_character;
-	string.boolean_to_string = &core_string_boolean_to_string;
-	string.get_2_byte_little_endian = &core_string_get_2_byte_little_endian;
-	string.get_4_byte_little_endian = &core_string_get_4_byte_little_endian;
+	string_functions.get_length = &core_string_get_length;
+	string_functions.get_substring = &core_string_get_substring;
+	string_functions.is_substring = &core_string_is_substring;
+	string_functions.are_strings_equal = &core_string_are_strings_equal;
+	string_functions.starts_with_string = &core_string_starts_with_string;
+	string_functions.ends_with_string = &core_string_ends_with_string;
+	string_functions.concatenate_strings = &core_string_concatenate_strings;
+	string_functions.search_character = &core_string_search_character;
+	string_functions.boolean_to_string = &core_string_boolean_to_string;
+	string_functions.get_2_byte_little_endian = &core_string_get_2_byte_little_endian;
+	string_functions.get_4_byte_little_endian = &core_string_get_4_byte_little_endian;
 }

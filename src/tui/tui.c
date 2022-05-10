@@ -1,10 +1,10 @@
 #include "tui.h"
 
-#include "args.h"
+#include "arguments.h"
 
-Tui tui;
+TuiFunctions tui;
 
 void tui_initialize() {
-	tui_args_initialize();
-	tui.args = args;
+	tui_arguments_initialize();
+	tui.arguments = arguments_functions;
 }
