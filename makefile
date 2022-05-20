@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-CFLAGS := -Wall -Wextra -O2 -march=native -pipe
+CFLAGS := -Wall -Wextra -Werror -O2 -march=native -pipe
 .SILENT:
 
 all: compile run
@@ -13,11 +13,12 @@ compile-tui:
 	filenames="$$(find src/ -name "*.c" | grep -E "src/(core|sound|tui)/" | grep -v -E "src/(core|sound|tui)/test/")"; \
 	gcc $(CFLAGS) $$libraries $$filenames src/main-tui.c -o bin/synthesizer-tui
 
+compile-gui: CLIBS := -lasound `pkg-config --cflags --libs gtk4`
+compile-gui: FILES := $$(find src/ -name "*.c" | grep -E "src/(core|sound|gui)")
+compile-gui: EXTRA := -D_GNU_SOURCE -Isrc
 compile-gui:
 	mkdir -p bin/
-	libraries="-lasound `pkg-config --cflags --libs gtk4`"; \
-	filenames="$$(find src/ -name "*.c" | grep -E "src/(core|sound|gui)/" | grep -v -E "src/(core|sound|gui)/test/")"; \
-	gcc $(CFLAGS) $$libraries $$filenames src/main-gui.c -o bin/synthesizer-gui
+	gcc $(CFLAGS) $(CLIBS) $(EXTRA) $(FILES) src/main-gui.c -o bin/synthesizer-gui
 
 tui: compile-tui
 	bin/synthesizer-tui
