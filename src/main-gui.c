@@ -2,16 +2,29 @@
 #include "sound/sound.h"
 #include "gui/gui.h"
 
+int count = 0;
+
 void print_hello_world()
 {
-	gui.print("Hello, world!\n");
+	count++;
+	gui.print("Hello, world! #%d\n", count);
+}
+
+void print_disappointment()
+{
+	gui.print("I do not wanted to be clicked! :(\n");
 }
 
 void synthesizer()
 {
 	gui.window.create("Synthesizer", 500, 500).build()
 	(
-		gui.button.create("Click me!", print_hello_world).build()
+		gui.layout.create("vertical").build()
+		(
+			gui.button.create("Click me!", print_hello_world).build(),
+			gui.button.create("Do not click me!", print_disappointment).build(),
+			gui.stopper()
+		)
 	);
 }
 

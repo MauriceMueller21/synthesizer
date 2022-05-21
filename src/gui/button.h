@@ -11,7 +11,6 @@ struct SButton
 	 * @param callback The callback button that is called once pressed.
 	 */
 	SButton (*create)(char* label, void(*callback)());
-	
 	/**
 	 * Builds the given button allowing children to be placed inside it.
 	 */

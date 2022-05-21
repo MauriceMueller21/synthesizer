@@ -35,9 +35,9 @@ void gui_print(const char* format, ...)
 	va_end(args);
 }
 
-SWidget* gui_placeholder()
+SWidget* gui_stopper()
 {
-	gui.push_build_stack(Window, "", 0);
+	gui.push_build_stack(Stopper, "", 0);
 	return gui.peek_build_stack();
 }
 
@@ -66,6 +66,18 @@ SWidget* gui_peek_build_stack()
 	return widget;
 }
 
+void gui_debug_build_stack()
+{
+	for (int i = 0; i < core.list.get_length(gui.build_stack); i++)
+	{
+		SWidget* widget = (SWidget*) core.list.get(gui.build_stack, i);
+		gui.print("stack at %d: %d\n", i, widget->type);
+	}
+	gui.print("\n");
+}
+
+void (*debug_buid_stack)();
+
 SGui gui;
 void gui_initialize()
 {
@@ -73,12 +85,15 @@ void gui_initialize()
 	gui.window = window;
 	gui_button_initialize();
 	gui.button = button;
+	gui_layout_initialize();
+	gui.layout = layout;
 	gui.init = &gui_init;
 	gui.run = &gui_run;
 	gui.print = &gui_print;
-	gui.placeholder = &gui_placeholder;
+	gui.stopper = &gui_stopper;
 	gui.push_build_stack = &gui_push_build_stack;
 	gui.pop_build_stack = &gui_pop_build_stack;
 	gui.peek_build_stack = &gui_peek_build_stack;
+	gui.debug_build_stack = &gui_debug_build_stack;
 }
 

@@ -6,8 +6,10 @@
 typedef enum SWidgetType SWidgetType;
 enum SWidgetType
 {
-	Window,
-	Button
+	Stopper = 0,
+	Window = 1,
+	Button = 2,
+	Layout = 3
 };
 
 /**

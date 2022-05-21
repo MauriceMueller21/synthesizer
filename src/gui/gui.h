@@ -2,6 +2,7 @@
 #include "gui/widget.h"
 #include "gui/window.h"
 #include "gui/button.h"
+#include "gui/layout.h"
 #include "core/list.h"
 #include <gtk/gtk.h>
 
@@ -10,6 +11,7 @@ struct SGui
 {
 	SWindow window;
 	SButton button;
+	SLayout layout;
 
 	/**
 	 * Initializes the gtk application and runs the given callback function once
@@ -38,11 +40,12 @@ struct SGui
 	void (*print)(const char* format, ...);
 	
 	/**
-	 * Returns an empty placeholder widget that does nothing.
+	 * Returns an empty placeholder widget that does nothing but stop futher
+	 * iteration for widgets that have any number of widgets.
 	 *
 	 * @return An empty, but valid placeholder widget.
 	 */
-	SWidget* (*placeholder)();
+	SWidget* (*stopper)();
 
 	/**
 	 * Only used internally!
@@ -81,6 +84,8 @@ struct SGui
 	 * @return The widget that was peeked.
 	 */
 	SWidget* (*peek_build_stack)();
+	
+	void (*debug_build_stack)();
 };
 extern SGui gui;
 
