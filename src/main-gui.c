@@ -1,29 +1,27 @@
 #include "core/core.h"
 #include "sound/sound.h"
 #include "gui/gui.h"
+#include "gui/widget.h"
 
-int count = 0;
-
-void print_hello_world()
+void print_hello()
 {
-	count++;
-	gui.print("Hello, world! #%d\n", count);
+	gui.print("Hello :D\n");
 }
 
-void print_disappointment()
+void print_angry()
 {
-	gui.print("I do not wanted to be clicked! :(\n");
+	gui.print("Ey :o\n");
 }
 
 void synthesizer()
 {
-	gui.window.create("Synthesizer", 500, 500).build()
+	CreateWidget(Window, "main-window").params("Synthesizer", 500, 500)
 	(
-		gui.layout.create("vertical").build()
+		CreateWidget(Layout).params("vertical")
 		(
-			gui.button.create("Click me!", print_hello_world).build(),
-			gui.button.create("Do not click me!", print_disappointment).build(),
-			gui.stopper()
+			CreateWidget(Button, "a").params("Click me!", print_hello),
+			CreateWidget(Button, "b").params("Do not click me!", print_angry),
+			SENTINAL
 		)
 	);
 }
@@ -32,8 +30,7 @@ int main(int argc, char** argv)
 {
 	core_initialize();
 	sound_initialize();
-	gui_initialize();
-	
+	initialize_gui_syntax();
 	gui.init("de.synthesizer.gui", synthesizer);
 	return gui.run(argc, argv);
 }

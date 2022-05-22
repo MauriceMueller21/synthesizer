@@ -1,24 +1,39 @@
 #include "gui/button.h"
 #include "gui/gui.h"
+#include "core/core.h"
+#include "core/extensions.h"
 #include <gtk/gtk.h>
-SButton button;
 
-SButton gui_button_create(char* label, void (*callback)())
+SButton gui_button_create(bool has_id, ...)
 {
-	GtkWidget *button = gtk_button_new_with_label(label);
-	g_signal_connect(button, "clicked", G_CALLBACK(callback), NULL);
-	gui.push_build_stack(Button, "", button);
+	SWidget* widget = malloc(sizeof(SWidget));
+	widget->gtk_widget = gtk_button_new_with_label("");
+	widget->is_sentinal = false;
+	
+	if (has_id)
+	{
+		va_list args;
+		va_start(args, has_id);
+		widget->identifier = va_arg(args, char*);
+		va_end(args);
+	}
+	
+	core_list_push(gui.build_stack, widget);
 	return gui.button;
 }
 
-SWidget* gui_button_build()
+SWidget* gui_button_params(char* label, void(*callback)())
 {
-	return gui.peek_build_stack();
+	SWidget* button = (SWidget*) core_list_peek(gui.build_stack);
+	gtk_button_set_label(GTK_BUTTON(button->gtk_widget), label);
+	g_signal_connect(button->gtk_widget, "clicked", G_CALLBACK(callback), NULL);	
+	return button;
 }
 
-void gui_button_initialize()
+SButton Button;
+void initialize_gui_button_syntax()
 {
-	button.create = &gui_button_create;
-	button.build = &gui_button_build;
+	Button.create = &gui_button_create;
+	Button.params = &gui_button_params;
 }
 

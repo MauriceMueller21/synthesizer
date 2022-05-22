@@ -1,28 +1,15 @@
 #pragma once
 #include "gui/widget.h"
+#include <stdbool.h>
 
-/**
- * Enables the special syntax for layout functions.
- *
- * usage: gui.layout.create(...).build()
- */
 typedef struct SLayout SLayout;
 struct SLayout
 {
-	/**
-	 * 
-	 */
-	SLayout (*create) (char* type);
-
-	/**
-	 * 
-	 */
-	SWidgetFunction (*build) ();
+	SLayout (*create)(bool has_id, ...);
+	SWidgetFunction (*params)(char* orientation);
 };
-extern SLayout layout;
+extern SLayout Layout;
+extern SWidget* SENTINAL;
 
-/**
- *
- */
-void gui_layout_initialize();
+void initialize_gui_layout_syntax();
 

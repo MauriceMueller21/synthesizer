@@ -1,96 +1,65 @@
 #pragma once
-#include "gui/widget.h"
 #include "gui/window.h"
-#include "gui/button.h"
 #include "gui/layout.h"
-#include "core/list.h"
-#include <gtk/gtk.h>
+#include "gui/button.h"
+//#include "gui/console.h"
+typedef struct _GtkApplication GtkApplication;
+typedef struct List WidgetList;
 
-typedef struct SGui SGui;
-struct SGui
+struct GuiFunctions
 {
 	SWindow window;
-	SButton button;
 	SLayout layout;
+	SButton button;
+	//SConsole console;
 
 	/**
-	 * Initializes the gtk application and runs the given callback function once
-	 * the application starts.
+	 * Initializes the gtk application.
 	 *
-	 * @param identifier The global unique identifier of this application.
-	 * @param callback The callback function that is called.
+	 * @param identifier The global unique identifier for this application.
+	 * @param callback   The callback function that defines all the widgets.
 	 */
 	void (*init)(char* identifier, void (*callback)(int));
-	
+
 	/**
-	 * Runs the application until it is closed and blocks the current thread.
-	 *
+	 * Runs the application until it is closed.
+	 *	
 	 * @param argc The number of command line arguments.
 	 * @param argv The list of the command line arguments.
-	 * @return The status code of the application.
+	 * @return 	   The status code of the application.
 	 */
 	int (*run)(int argc, char** argv);
-	
+
 	/**
-	 * Prints the text to the console while the application is running.
+	 * Prints the text to the console or a widget.
 	 *
-	 * @param format A string format that can contain format tags.
-	 * @param ... Additional parameters for each format tag.
+	 * @param format The string that can contain format tags.
+	 * @param ...    Additional parameters for each format tag.
 	 */
 	void (*print)(const char* format, ...);
-	
-	/**
-	 * Returns an empty placeholder widget that does nothing but stop futher
-	 * iteration for widgets that have any number of widgets.
-	 *
-	 * @return An empty, but valid placeholder widget.
-	 */
-	SWidget* (*stopper)();
 
 	/**
 	 * Only used internally!
-	 * Pointer to the gtk application. Should not be used externally.
+	 * The Pointer to the gtk application.
 	 */
 	GtkApplication* app;
 	
 	/**
 	 * Only used internally!
-	 * A pointer to the widgets that are building.
+	 * The list that contains all the named widgets.
 	 */
-	List* build_stack;
+	WidgetList* widgets;
 	
 	/**
 	 * Only used internally!
-	 * Pushes a new gtk widget onto the build stack. Creates the memory
-	 * dyanmically.
-	 *
-	 * @param type The type of the widget.
-	 * @param identifier The identifier of the widget.
-	 * @param gtk_widget The gtk widget that should be pushed.
+	 * The stack that contains all the building widgets.
 	 */
-	void (*push_build_stack)(SWidgetType type, char* identifier, void* gtk_widget);
-	
-	/**
-	 * Only used internally!
-	 * Pops the last widget that was pushed onto the build stack. Frees the
-	 * used memory.
-	 */
-	void (*pop_build_stack)();
-	
-	/**
-	 * Only used internally!
-	 * Peeks at the last widget that was pushed onto the build stack.
-	 *
-	 * @return The widget that was peeked.
-	 */
-	SWidget* (*peek_build_stack)();
-	
-	void (*debug_build_stack)();
+	WidgetList* build_stack;
 };
-extern SGui gui;
+extern struct GuiFunctions gui;
 
 /**
  * Initializes the special syntax for the gui functions.
  */
-void gui_initialize();
+void initialize_gui_syntax();
 

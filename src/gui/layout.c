@@ -1,62 +1,78 @@
 #include "gui/layout.h"
 #include "gui/gui.h"
 #include "core/core.h"
-#include "core/list.h"
+#include "core/extensions.h"
 #include <gtk/gtk.h>
 #include <stdarg.h>
-SLayout layout;
 
-SLayout gui_layout_create(char* type)
+SLayout gui_layout_create(bool has_id, ...)
 {
-	GtkOrientation orientation = (strcmp(type, "horizontal") == 0) ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
-	GtkWidget* layout = gtk_box_new(orientation, 0);
-	gui.push_build_stack(Layout, "", layout);
+	SWidget* widget = malloc(sizeof(SWidget));
+	widget->gtk_widget = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+	widget->is_sentinal = false;
+	
+	if (has_id)
+	{
+		va_list args;
+		va_start(args, has_id);
+		widget->identifier = va_arg(args, char*);
+		va_end(args);
+	}
+	
+	core_list_push(gui.build_stack, widget);
 	return gui.layout;
 }
 
 SWidget* gui_layout_build_callback(SWidget* widget, ...)
 {
-	List* list = core.list.create();
-	core.list.add(list, widget->gtk_widget);
-	gui.pop_build_stack();
-
+	List* children = core.list.create();
+	core_list_push(children, widget->gtk_widget);
+	
 	va_list args;
 	va_start(args, widget);
 	
 	for(int i = 0;;i++)
 	{
-		widget = va_arg(args, SWidget*);
-	
-		if (widget->type == Stopper)
+		SWidget* child = va_arg(args, SWidget*);
+		
+		if (child->is_sentinal)
 		{
-			gui.pop_build_stack();
+			core_list_pop(gui.build_stack);
 			break;
 		}
 		
-		core.list.add(list, widget->gtk_widget);
-		gui.pop_build_stack();
+		core_list_pop(gui.build_stack);
+		core_list_push(children, child->gtk_widget);
+		push_only_named_widget(gui.widgets, child);
 	}
 	
 	va_end(args);
-
-	SWidget* layout = gui.peek_build_stack();
-	for (int i = 0; i < core.list.get_length(list); i++)
-	{
-		gtk_box_append(GTK_BOX(layout->gtk_widget), core.list.get(list, i));		
-	}
 	
-	core.list.destroy(list);
+	SWidget* layout = core_list_peek(gui.build_stack);
+	for (int i = 0; i < core.list.get_length(children); i++)
+	{
+		gtk_box_append(GTK_BOX(layout->gtk_widget), core.list.get(children, i));		
+	}
+	core.list.destroy(children);
 	return layout;
 }
 
-SWidgetFunction gui_layout_build()
+SWidgetFunction gui_layout_params(char* orientation)
 {
+	void* layout = ((SWidget*) core_list_peek(gui.build_stack))->gtk_widget;
+	gtk_orientable_set_orientation(GTK_ORIENTABLE(layout),
+		(strcmp(orientation, "horizontal") == 0) ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL);
 	return gui_layout_build_callback;
 }
 
-void gui_layout_initialize()
+
+SWidget* SENTINAL;
+SLayout Layout;
+void initialize_gui_layout_syntax()
 {
-	layout.create = &gui_layout_create;
-	layout.build = &gui_layout_build;
+	Layout.create = &gui_layout_create;
+	Layout.params = &gui_layout_params;
+	SENTINAL = (SWidget*) malloc(sizeof(SWidget));
+	SENTINAL->is_sentinal = true;
 }
 

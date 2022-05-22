@@ -1,25 +1,14 @@
 #pragma once
 #include "gui/widget.h"
+#include <stdbool.h>
 
 typedef struct SButton SButton;
 struct SButton
 {
-	/**
-	 * Creates a new button inside the application with the given properties.
-	 *
-	 * @param label The displayed label of the button.
-	 * @param callback The callback button that is called once pressed.
-	 */
-	SButton (*create)(char* label, void(*callback)());
-	/**
-	 * Builds the given button allowing children to be placed inside it.
-	 */
-	SWidget* (*build)(void);
+	SButton (*create)(bool has_id, ...);
+	SWidget* (*params)(char* label, void(*callback)());
 };
-extern SButton button;
+extern SButton Button;
 
-/**
- * Initializes the special syntax for the button functions.
- */
-void gui_button_initialize();
+void initialize_gui_button_syntax();
 
