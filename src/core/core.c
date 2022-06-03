@@ -13,4 +13,6 @@ void core_initialize() {
 	core.string = string_functions;
 	core_string_list_initialize();
 	core.stringlist = string_list_functions;
+	core_time_initialize();
+	core.time = time_functions;
 }

@@ -5,6 +5,7 @@
 #include "list.h"
 #include "string.h"
 #include "string_list.h"
+#include "time.h"
 
 typedef struct CoreFunctions {
 	CharListFunctions charlist;
@@ -12,6 +13,7 @@ typedef struct CoreFunctions {
 	ListFunctions list;
 	StringFunctions string;
 	StringListFunctions stringlist;
+	TimeFunctions time;
 } CoreFunctions;
 
 extern CoreFunctions core;
