@@ -29,7 +29,7 @@ output_path="bin/test/$1/"
 program="${output_path}test-$1"
 log_file="${output_path}output.log"
 
-libraries="-lX11"
+libraries="-lX11 -lncurses -lpthread"
 flags="-Wall -Wextra -Werror"
 source_files="$(find src/ -name '*.c' | grep -E ${source_file_pattern})"
 
