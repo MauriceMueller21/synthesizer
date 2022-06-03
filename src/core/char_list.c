@@ -6,6 +6,9 @@
 
 CharListFunctions char_list_functions;
 
+char core_char_list_get(CharList* list, int position);
+int core_char_list_get_length(CharList* list);
+
 CharList* core_char_list_create() {
 	List* list = core.list.create();
 	CharList* char_list = malloc(sizeof(CharList));
@@ -17,6 +20,10 @@ void core_char_list_add(CharList* list, char character) {
 	char* pointer = malloc(sizeof(char));
 	*pointer = character;
 	core.list.add(list->list, pointer);
+}
+
+void core_char_list_push(CharList* list, char character) {
+	core_char_list_add(list, character);
 }
 
 void core_char_list_set(CharList* list, int position, char character) {
@@ -35,9 +42,29 @@ void core_char_list_remove(CharList* list, int position) {
 	core.list.remove(list->list, position);
 }
 
+char core_char_list_pop(CharList* list) {
+	int length = core_char_list_get_length(list);
+	if (length >= 1) {
+		char value = core_char_list_get(list, length - 1);
+		core_char_list_remove(list, length - 1);
+		return value;
+	} else {
+		return 0;
+	}
+}
+
 char core_char_list_get(CharList* list, int position) {
 	void* pointer = core.list.get(list->list, position);
 	return *((char*)pointer);
+}
+
+char core_char_list_peek(CharList* list) {
+	int length = core_char_list_get_length(list);
+	if (length >= 1) {
+		return core_char_list_get(list, length - 1);
+	} else {
+		return 0;
+	}
 }
 
 void* core_char_list_to_array(CharList* list) {
@@ -84,10 +111,13 @@ void core_char_list_destroy(CharList* list) {
 void core_char_list_initialize() {
 	char_list_functions.create = &core_char_list_create;
 	char_list_functions.add = &core_char_list_add;
+	char_list_functions.push = &core_char_list_push;
 	char_list_functions.set = &core_char_list_set;
 	char_list_functions.insert = &core_char_list_insert;
 	char_list_functions.remove = &core_char_list_remove;
+	char_list_functions.pop = &core_char_list_pop;
 	char_list_functions.get = &core_char_list_get;
+	char_list_functions.peek = &core_char_list_peek;
 	char_list_functions.to_array = &core_char_list_to_array;
 	char_list_functions.to_string = &core_char_list_to_string;
 	char_list_functions.print_connect = &core_char_list_print_connect;

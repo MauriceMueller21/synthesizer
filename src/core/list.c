@@ -8,6 +8,9 @@
 
 ListFunctions list_functions;
 
+void* core_list_get(List* list, int position);
+int core_list_get_length(List* list);
+
 List* core_list_create() {
 	List* list = malloc(sizeof(List));
 	list->start = NULL;
@@ -33,6 +36,10 @@ void core_list_add(List* list, void* pointer) {
 	}
 	list->end = item;
 	list->length++;
+}
+
+void core_list_push(List* list, void* pointer) {
+	core_list_add(list, pointer);
 }
 
 int core_list_get_optimal_pointer(List* list, int interest) {
@@ -147,6 +154,17 @@ void core_list_remove(List* list, int position) {
 	list->length--;
 }
 
+void* core_list_pop(List* list) {
+	int length = core_list_get_length(list);
+	if (length >= 1) {
+		void* value = core_list_get(list, length - 1);
+		core_list_remove(list, length - 1);
+		return value;
+	} else {
+		return 0;
+	}
+}
+
 void* core_list_get_item(List* list, int position) {
 	core_list_move_last_accessed(list, position);
 	return list->last_accessed;
@@ -155,6 +173,15 @@ void* core_list_get_item(List* list, int position) {
 void* core_list_get(List* list, int position) {
 	ListItem* item = core_list_get_item(list, position);
 	return item->pointer;
+}
+
+void* core_list_peek(List* list) {
+	int length = core_list_get_length(list);
+	if (length >= 1) {
+		return core_list_get(list, length - 1);
+	} else {
+		return 0;
+	}
 }
 
 void* core_list_to_array(List* list) {
@@ -222,11 +249,14 @@ void core_list_destroy(List* list) {
 void core_list_initialize() {
 	list_functions.create = &core_list_create;
 	list_functions.add = &core_list_add;
+	list_functions.push = &core_list_push;
 	list_functions.set = &core_list_set;
 	list_functions.insert = &core_list_insert;
 	list_functions.remove = &core_list_remove;
+	list_functions.pop = &core_list_pop;
 	list_functions.get_item = &core_list_get_item;
 	list_functions.get = &core_list_get;
+	list_functions.peek = &core_list_peek;
 	list_functions.to_array = &core_list_to_array;
 	list_functions.print_connect = &core_list_print_connect;
 	list_functions.print = &core_list_print;
