@@ -11,10 +11,13 @@ typedef struct StringList {
 typedef struct StringListFunctions {
 	StringList* (*create)();
 	void (*add)(StringList* list, char* string);
+	void (*push)(StringList* list, char* string);
 	void (*set)(StringList* list, int position, char* string);
 	void (*insert)(StringList* list, int position, char* string);
 	void (*remove)(StringList* list, int position);
+	char* (*pop)(StringList* list);
 	char* (*get)(StringList* list, int position);
+	char* (*peek)(StringList* list);
 	void* (*to_array)(StringList* list);
 	void (*print_connect)(StringList* list, char* connect);
 	void (*print)(StringList* list);

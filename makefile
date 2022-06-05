@@ -9,9 +9,9 @@ clean:
 
 compile-tui:
 	mkdir -p bin/
-	libraries="-lasound"; \
+	libraries="-lasound -lncurses -lpthread"; \
 	filenames="$$(find src/ -name "*.c" | grep -E "src/(core|sound|tui)/" | grep -v -E "src/(core|sound|tui)/test/")"; \
-	gcc $(CFLAGS) $$libraries $$filenames src/main-tui.c -o bin/synthesizer-tui
+	gcc $(CFLAGS) $$filenames src/main-tui.c -o bin/synthesizer-tui $$libraries
 
 compile-gui: CLIBS := -lasound `pkg-config --cflags --libs gtk4`
 compile-gui: FILES := $$(find src/ -name "*.c" | grep -E "src/(core|sound|gui)")

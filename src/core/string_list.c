@@ -6,6 +6,9 @@
 
 StringListFunctions string_list_functions;
 
+char* core_string_list_get(StringList* list, int position);
+int core_string_list_get_length(StringList* list);
+
 StringList* core_string_list_create() {
 	List* list = core.list.create();
 	StringList* string_list = malloc(sizeof(StringList));
@@ -15,6 +18,10 @@ StringList* core_string_list_create() {
 
 void core_string_list_add(StringList* list, char* string) {
 	core.list.add(list->list, string);
+}
+
+void core_string_list_push(StringList* list, char* string) {
+	core_string_list_add(list, string);
 }
 
 void core_string_list_set(StringList* list, int position, char* string) {
@@ -29,9 +36,29 @@ void core_string_list_remove(StringList* list, int position) {
 	core.list.remove(list->list, position);
 }
 
+char* core_string_list_pop(StringList* list) {
+	int length = core_string_list_get_length(list);
+	if (length >= 1) {
+		char* value = core_string_list_get(list, length - 1);
+		core_string_list_remove(list, length - 1);
+		return value;
+	} else {
+		return 0;
+	}
+}
+
 char* core_string_list_get(StringList* list, int position) {
 	void* pointer = core.list.get(list->list, position);
 	return (char*)pointer;
+}
+
+char* core_string_list_peek(StringList* list) {
+	int length = core_string_list_get_length(list);
+	if (length >= 1) {
+		return core_string_list_get(list, length - 1);
+	} else {
+		return 0;
+	}
 }
 
 void* core_string_list_to_array(StringList* list) {
@@ -78,10 +105,13 @@ void core_string_list_destroy(StringList* list) {
 void core_string_list_initialize() {
 	string_list_functions.create = &core_string_list_create;
 	string_list_functions.add = &core_string_list_add;
+	string_list_functions.push = &core_string_list_push;
 	string_list_functions.set = &core_string_list_set;
 	string_list_functions.insert = &core_string_list_insert;
 	string_list_functions.remove = &core_string_list_remove;
+	string_list_functions.pop = &core_string_list_pop;
 	string_list_functions.get = &core_string_list_get;
+	string_list_functions.peek = &core_string_list_peek;
 	string_list_functions.to_array = &core_string_list_to_array;
 	string_list_functions.print_connect = &core_string_list_print_connect;
 	string_list_functions.print = &core_string_list_print;
