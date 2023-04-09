@@ -11,7 +11,7 @@ void gtk_callback(GtkApplication*, gpointer callback)
 
 void gui_init(char* identifier, void (*callback)(int))
 {
-	gui.app = gtk_application_new(identifier, G_APPLICATION_FLAGS_NONE);
+	gui.app = gtk_application_new(identifier, G_APPLICATION_DEFAULT_FLAGS);
 	g_signal_connect(gui.app, "activate", G_CALLBACK(gtk_callback), callback);
 	gui.widgets = core.list.create();
 	gui.build_stack = core.list.create();

@@ -38,7 +38,7 @@ SWidgetFunction gui_window_params(char* title, int width, int height)
 	void* window = ((SWidget*) core.list.peek(gui.build_stack))->gtk_widget;
 	gtk_window_set_title(GTK_WINDOW(window), title);
 	gtk_window_set_default_size(GTK_WINDOW(window), width, height);
-	gtk_widget_show(window);
+	gtk_window_present(window);
 	return gui_window_build_callback;
 }
 
